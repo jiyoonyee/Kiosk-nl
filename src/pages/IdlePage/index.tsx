@@ -100,7 +100,7 @@ const IdleBackgroundContainer = styled.div`
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
 
   & > img {
     height: 30%;
@@ -128,6 +128,7 @@ const IdleBackgroundContainer = styled.div`
     /* position: relative; */
     z-index: 1;
   }
+
   @media (min-height: 2000px) {
     & {
       height: 75%;
