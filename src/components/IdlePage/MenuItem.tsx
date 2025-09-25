@@ -6,10 +6,10 @@ const MenuItem = () => {
   return (
     <>
       <Wrap>
-        <img src={MenuImg} alt="" />
+        <MenuImgWrap></MenuImgWrap>
         <MenuName>Morning Boost Smoothie Bowl</MenuName>
         <TextWrap>
-          <PriceText style={{ fontSize: "6rem" }}>€4.50</PriceText>
+          <PriceText style={{ fontSize: "5vw" }}>€4.50</PriceText>
         </TextWrap>
       </Wrap>
     </>
@@ -20,19 +20,26 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
   overflow: hidden;
-  & > img {
-    border-radius: 10px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-  }
+`;
+
+const MenuImgWrap = styled.div`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: blue;
+  border-radius: 10px;
+  background-image: url(${MenuImg});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const MenuName = styled.div`
-  font-size: 3rem;
+  font-size: 3vw;
   text-align: center;
   font-weight: bold;
   color: #004f1b;

@@ -35,10 +35,10 @@ const IdlePage = () => {
         <IdleBackgroundContainer>
           <img src={CharLogoImg} alt="logo" />
           <Swiper
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
+            // autoplay={{
+            //   delay: 2000,
+            //   disableOnInteraction: false,
+            // }}
             loop={true}
             style={{ width: "100%" }}
             effect={"coverflow"}
@@ -96,6 +96,14 @@ const IdleBackgroundContainer = styled.div`
   width: 100%;
   height: 70%;
   position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  & > img {
+    height: 30%;
+  }
   &::after {
     width: 100%;
     height: 100%;
@@ -114,10 +122,6 @@ const IdleBackgroundContainer = styled.div`
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 
   & > * {
     /* position: relative; */
@@ -134,7 +138,7 @@ const OrderWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 25px;
-  font-size: 64px;
+  font-size: 6vw;
   font-weight: bold;
 `;
 
@@ -165,7 +169,7 @@ const OrderButton = styled.div`
     align-items: center;
     flex-direction: column;
     gap: 20px;
-    font-size: 50px;
+    font-size: 5vw;
     color: white;
     font-weight: 600;
     background-color: #004f1b;
