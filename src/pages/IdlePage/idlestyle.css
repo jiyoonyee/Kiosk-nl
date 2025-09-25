@@ -5,7 +5,7 @@
 
 .swiper-slide {
   background-color: white;
-  width: 60%;
+  width: 70%;
   max-height: 100%;
   position: relative;
   border-radius: 2%;
@@ -46,11 +46,23 @@
   background: #004f1b;
 }
 
+@media (max-height: 1000px) {
+  .swiper {
+    height: auto;
+  }
+  .swiper-slide {
+    /* background-color: #949694; */
+    padding: 10px;
+    width: 60%;
+  }
+}
+
 @media (min-height: 2000px) {
   .swiper {
     height: auto;
   }
   .swiper-slide {
-    width: 80%;
+    padding: 60px;
+    width: 75%;
   }
 }

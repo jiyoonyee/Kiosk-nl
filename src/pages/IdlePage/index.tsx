@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PageWrapper } from "@/components/Layout";
+import { PageWrapper } from "@/components/layouts/Layout";
 import IdleBackground from "@/assets/images/IdleBackground.png";
 import CharLogoImg from "@/assets/images/CharLogo.png";
 import eatinImg from "@/assets/images/eatin.png";
@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 
 import "./idlestyle.css";
 import { useRef } from "react";
-import MenuItem from "@/components/IdlePage/MenuItem";
+import MenuItem from "@/pages/IdlePage/components/MenuItem";
 
 const IdlePage = () => {
   const test = useRef(null);

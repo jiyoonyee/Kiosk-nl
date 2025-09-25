@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import MenuImg from "@/assets/images/MenuImg.png";
-import { PriceText } from "@/components/Layout";
+import { PriceText } from "@/components/layouts/Layout";
 
 const MenuItem = () => {
   return (
@@ -25,6 +25,16 @@ const Wrap = styled.div`
   flex-direction: column;
   gap: 20px;
   overflow: hidden;
+  @media (max-height: 1000px) {
+    & {
+      gap: 10px;
+    }
+  }
+  @media (min-height: 2000px) {
+    & {
+      gap: 40px;
+    }
+  }
 `;
 
 const MenuImgWrap = styled.div`
