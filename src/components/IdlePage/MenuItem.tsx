@@ -18,9 +18,9 @@ const MenuItem = () => {
 
 const Wrap = styled.div`
   width: 100%;
-  height: 100%;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   gap: 20px;
@@ -30,8 +30,8 @@ const Wrap = styled.div`
 const MenuImgWrap = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: blue;
-  border-radius: 10px;
+  /* background-color: blue; */
+  border-radius: 2%;
   background-image: url(${MenuImg});
   background-size: cover;
   background-position: center;

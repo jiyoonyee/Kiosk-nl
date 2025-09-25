@@ -101,6 +101,7 @@ const IdleBackgroundContainer = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 20px;
+
   & > img {
     height: 30%;
   }
@@ -127,6 +128,11 @@ const IdleBackgroundContainer = styled.div`
     /* position: relative; */
     z-index: 1;
   }
+  @media (min-height: 2000px) {
+    & {
+      height: 75%;
+    }
+  }
 `;
 
 const OrderWrapper = styled.div`
@@ -140,6 +146,12 @@ const OrderWrapper = styled.div`
   gap: 25px;
   font-size: 6vw;
   font-weight: bold;
+  /* padding-bottom: 120px; */
+  @media (min-height: 2000px) {
+    & {
+      height: 20%;
+    }
+  }
 `;
 
 const OrderButton = styled.div`

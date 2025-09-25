@@ -1,19 +1,14 @@
 .swiper {
   width: 100%;
-  height: 65%;
-}
-
-@media (max-width: 1080px) {
-  .swiper {
-    height: 60%;
-  }
+  height: auto;
 }
 
 .swiper-slide {
   background-color: white;
   width: 60%;
+  max-height: 100%;
   position: relative;
-  border-radius: 10px;
+  border-radius: 2%;
   padding: 30px;
 }
 
@@ -49,4 +44,13 @@
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background: #004f1b;
+}
+
+@media (min-height: 2000px) {
+  .swiper {
+    height: auto;
+  }
+  .swiper-slide {
+    width: 80%;
+  }
 }
