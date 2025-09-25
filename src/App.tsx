@@ -1,7 +1,7 @@
 import Header from "./components/layouts/Header";
 import IdlePage from "./pages/IdlePage";
 import MenuPage from "./pages/MenuPage";
-import { _BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 const App = () => {
   const location = useLocation();

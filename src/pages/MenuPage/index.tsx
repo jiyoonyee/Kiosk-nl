@@ -1,4 +1,3 @@
-import _styled from "styled-components";
 import { PageWrapper } from "@/components/layouts/Layout";
 
 const MenuPage = () => {
