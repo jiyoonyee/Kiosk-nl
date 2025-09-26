@@ -6,6 +6,7 @@ import eatinImg from "@/assets/images/eatin.png";
 import takeoutImg from "@/assets/images/takeout.png";
 // import required modules
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 // import { Navigation, Pagination, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -77,14 +78,14 @@ const IdlePage = () => {
         <OrderWrapper>
           <span>Order Here</span>
           <OrderButton>
-            <div>
+            <Link to={"/menu"}>
               <img src={takeoutImg} alt="" />
               <span>Take out</span>
-            </div>
-            <div>
+            </Link>
+            <Link to={"/menu"}>
               <img src={eatinImg} alt="" />
               <span>Eat In</span>
-            </div>
+            </Link>
           </OrderButton>
         </OrderWrapper>
       </PageWrapper>
@@ -174,7 +175,7 @@ const OrderButton = styled.div`
     left: 50%;
     transform: translateX(-50%);
   }
-  & > div {
+  & > a {
     width: 50%;
     height: 100%;
     display: flex;

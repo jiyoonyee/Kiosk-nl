@@ -23,7 +23,7 @@ const Wrap = styled.header`
 `;
 
 const LogoWrap = styled.div`
-  width: 32%;
+  width: 35%;
   height: 100%;
   display: flex;
   justify-content: center;
