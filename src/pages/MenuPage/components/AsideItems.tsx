@@ -37,7 +37,7 @@ const AsideSelector: React.FC<CategoryProps> = ({
         name="Category"
         value={CategoryName}
         id={CategoryName}
-        onChange={(e) => group.onChange && group.onChange(e.target.value)}
+        onChange={(e) => group.$onChange && group.$onChange(e.target.value)}
       />
       <Wrap htmlFor={CategoryName}>
         <CategoryImageContainer $active={selectState}>
@@ -63,6 +63,17 @@ const Wrap = styled.label`
     text-align: center;
     font-size: 2.5vw;
     font-weight: bold;
+  }
+  @media (max-height: 1500px) {
+    & > span {
+      font-size: 1.9vw;
+    }
+  }
+  @media (min-width: 1100px) {
+    & > span {
+      font-size: 1.9vw;
+      color: green;
+    }
   }
 `;
 

@@ -15,6 +15,7 @@ import AsideContext from "@/contexts/AsideContext";
 
 interface CategoryProps {
   value: string;
+  $onChange: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AsideWrapper: React.FC<CategoryProps> = ({ value, ...rest }) => {

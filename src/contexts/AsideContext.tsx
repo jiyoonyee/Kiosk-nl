@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 interface AsideContextType {
-  onChange?: (value: string) => void;
+  $onChange?: (value: string) => void;
 }
 const AsideContext = createContext<AsideContextType>({});
 

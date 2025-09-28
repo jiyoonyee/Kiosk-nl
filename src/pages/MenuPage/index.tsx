@@ -12,7 +12,7 @@ const MenuPage = () => {
     <>
       <PageWrapper style={{ paddingTop: "10vh" }}>
         <MainWrapper>
-          <AsdieWrapper value={selected} onChange={setSelected} />
+          <AsdieWrapper value={selected} $onChange={setSelected} />
           <MenuWrapper></MenuWrapper>
         </MainWrapper>
       </PageWrapper>
