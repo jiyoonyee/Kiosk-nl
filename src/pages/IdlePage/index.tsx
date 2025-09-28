@@ -17,7 +17,7 @@ import "swiper/css/pagination";
 
 import "./idlestyle.css";
 import { useRef } from "react";
-import MenuItem from "@/pages/IdlePage/components/MenuItem";
+import IdleMenuItem from "@/pages/IdlePage/components/IdleMenuItem";
 
 const IdlePage = () => {
   const test = useRef(null);
@@ -58,19 +58,19 @@ const IdlePage = () => {
             className="mySwiper"
           >
             <SwiperSlide>
-              <MenuItem />
+              <IdleMenuItem />
             </SwiperSlide>
             <SwiperSlide>
-              <MenuItem />
+              <IdleMenuItem />
             </SwiperSlide>
             <SwiperSlide>
-              <MenuItem />
+              <IdleMenuItem />
             </SwiperSlide>
             <SwiperSlide>
-              <MenuItem />
+              <IdleMenuItem />
             </SwiperSlide>
             <SwiperSlide>
-              <MenuItem />
+              <IdleMenuItem />
             </SwiperSlide>
           </Swiper>
           <div className="swiper-pagination"></div>

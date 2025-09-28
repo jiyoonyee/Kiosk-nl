@@ -2,7 +2,7 @@ import styled from "styled-components";
 import MenuImg from "@/assets/images/MenuImg.png";
 import { PriceText } from "@/components/layouts/Layout";
 
-const MenuItem = () => {
+const IdleMenuItem = () => {
   return (
     <>
       <Wrap>
@@ -62,4 +62,4 @@ const TextWrap = styled.div`
   width: 100%;
 `;
 
-export default MenuItem;
+export default IdleMenuItem;

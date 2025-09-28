@@ -9,7 +9,7 @@ import Snacks_Img from "@/assets/images/category-snacks.png";
 import Dips_Img from "@/assets/images/category-dip.png";
 import Drinks_Img from "@/assets/images/category-drink.png";
 
-import AsideItems from "./AsideItems";
+import AsideItem from "./AsideItem";
 
 import AsideContext from "@/contexts/AsideContext";
 
@@ -33,7 +33,7 @@ const AsideWrapper: React.FC<CategoryProps> = ({ value, ...rest }) => {
       <AsideCategory>
         <AsideContext.Provider value={rest}>
           {Categorys.map((c, i) => (
-            <AsideItems
+            <AsideItem
               key={i}
               CategoryName={c.name}
               ImagePath={c.path}

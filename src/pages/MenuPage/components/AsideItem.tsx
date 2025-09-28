@@ -12,7 +12,7 @@ interface SelectProps {
   $active: boolean;
 }
 
-const AsideSelector: React.FC<CategoryProps> = ({
+const AsideItem: React.FC<CategoryProps> = ({
   CategoryName,
   ImagePath,
   Selected,
@@ -21,8 +21,9 @@ const AsideSelector: React.FC<CategoryProps> = ({
   // console.log(Selected);
   const [selectState, setSelectState] = useState(false);
 
+  // props값 받을때마다 랜더링해서 코드 실행
   useEffect(() => {
-    if (CategoryName == Selected) {
+    if (CategoryName === Selected) {
       setSelectState(true);
     } else {
       setSelectState(false);
@@ -112,4 +113,4 @@ const CategoryImageContainer = styled.div<SelectProps>`
   }
 `;
 
-export default AsideSelector;
+export default AsideItem;
