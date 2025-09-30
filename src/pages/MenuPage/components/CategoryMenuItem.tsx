@@ -12,7 +12,11 @@ const CategoryMenuItem: React.FC<MenuInfoProps> = () => {
   return (
     <>
       <Wrap>
-        <img src={MenuImage} alt="sampleImage" />
+        <img
+          style={{ borderBottom: "1px solid black" }}
+          src={MenuImage}
+          alt="sampleImage"
+        />
         <MenuInfor>
           <MenuNameText>Morning Boost Smoothie Bowl</MenuNameText>
           <MenuDetailInforWrap>
@@ -27,7 +31,8 @@ const CategoryMenuItem: React.FC<MenuInfoProps> = () => {
 
 const Wrap = styled.div`
   background-color: white;
-  box-shadow: 0px 0px 5px 5px gray;
+  box-shadow: 0px 0px 5px 5px #d9d9d9;
+  border: 1px solid #4f4f4f;
   border-radius: 10px;
   /* height: 10vh; */
   overflow: hidden;
