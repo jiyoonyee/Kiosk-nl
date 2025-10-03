@@ -4,23 +4,74 @@ import AsdieWrapper from "./components/AsideWrapper";
 import CategoryMenuWrapper from "./components/CategoryMenuWrapper";
 import shoppingcartImage from "@/assets/images/ShoppingCart.png";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Popup from "./components/Popup";
+
+export interface MenuItemInterface {
+  product_id: number;
+  available: boolean;
+  kcal: number;
+  price: string;
+  name: string;
+  filename: string;
+}
+
+interface CategoryItem {
+  name: string;
+  data: MenuItemInterface[];
+}
 
 const MenuPage = () => {
   const [selected, setSelected] = useState("ALL");
-  // console.log(selected);
+  const [menuData, setMenuData] = useState<CategoryItem[] | null>(null);
+  const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
+  const [popupState, setPopupState] = useState(true);
+
+  const getMenuDetail = (menuId: number | null) => {
+    if (!selectedMenu) return;
+
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/product-detail`, {
+        params: {
+          id: menuId,
+        },
+      })
+      .then((res) => {
+        console.log(res.data[0]);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
+      .then((res) => {
+        // console.log(res);
+        setMenuData(res.data);
+      });
+
+    getMenuDetail(selectedMenu);
+  }, [selectedMenu]);
+  // if (menuData) {
+  //   console.log([menuData]);
+  // }
 
   return (
     <>
       <PageWrapper style={{ paddingTop: "10vh" }}>
+        {popupState && <Popup />}
         <MainWrapper>
           <AsdieWrapper value={selected} $onChange={setSelected} />
           <MenuWrapper>
-            <CategoryMenuWrapper />
-            <CategoryMenuWrapper />
-            <CategoryMenuWrapper />
-            <CategoryMenuWrapper />
-            <CategoryMenuWrapper />
+            {menuData &&
+              menuData.map((item, i) => (
+                <CategoryMenuWrapper
+                  $onChange={setSelectedMenu}
+                  name={item.name}
+                  data={item.data}
+                  key={i}
+                />
+              ))}
           </MenuWrapper>
         </MainWrapper>
         <MyOrderWrapper>
@@ -98,7 +149,7 @@ const MenuWrapper = styled.div`
 const MyOrderWrapper = styled.div`
   width: 100%;
   height: 30%;
-  padding: 20px 20px 0px;
+  padding: 20px 30px 0px;
   /* background-color: #eaeaea; */
 
   display: flex;

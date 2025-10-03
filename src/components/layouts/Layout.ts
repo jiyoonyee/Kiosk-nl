@@ -17,3 +17,10 @@ export const KcalText = styled.div`
   color: #009633;
   text-align: center;
 `;
+
+export const ModalWrap = styled.div`
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 40px;
+  position: relative;
+`;

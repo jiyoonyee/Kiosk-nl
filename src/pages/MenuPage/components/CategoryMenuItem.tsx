@@ -1,27 +1,40 @@
 import styled from "styled-components";
-import MenuImage from "@/assets/images/MenuImg.png";
+
 import { KcalText, PriceText } from "@/components/layouts/Layout";
+import { type MenuItemInterface } from "../index";
+import { useContext } from "react";
+import axios from "axios";
+import MenuContext from "@/contexts/MenuContext";
 
-interface MenuInfoProps {
-  MenuName?: string;
-  MenuKcal?: number;
-  MenuPrice?: number;
-}
+const CategoryMenuItem: React.FC<MenuItemInterface> = ({
+  available,
+  filename,
+  kcal,
+  name,
+  price,
+  product_id,
+}) => {
+  // const [menuId, setMenuId] = useState<number | null>(null);
+  const selecter = useContext(MenuContext);
 
-const CategoryMenuItem: React.FC<MenuInfoProps> = () => {
+  // useEffect(() => {
+  //   if (product_id) setMenuId(product_id);
+  //   // if (menuId) console.log(menuId);
+  // }, [menuId]);
+
   return (
     <>
-      <Wrap>
+      <Wrap onClick={() => selecter?.$onChange?.(product_id)}>
         <img
           style={{ borderBottom: "1px solid black" }}
-          src={MenuImage}
+          src={import.meta.env.VITE_API_URL + filename}
           alt="sampleImage"
         />
         <MenuInfor>
-          <MenuNameText>Morning Boost Smoothie Bowl</MenuNameText>
+          <MenuNameText>{name}</MenuNameText>
           <MenuDetailInforWrap>
-            <KcalText style={{ fontSize: "1.8vw" }}>300Kcal</KcalText>
-            <PriceText style={{ fontSize: "2.4vw" }}>€4.50</PriceText>
+            <KcalText style={{ fontSize: "1.8vw" }}>{kcal}Kcal</KcalText>
+            <PriceText style={{ fontSize: "2.4vw" }}>€{price}</PriceText>
           </MenuDetailInforWrap>
         </MenuInfor>
       </Wrap>
@@ -52,8 +65,9 @@ const MenuInfor = styled.div`
 `;
 const MenuNameText = styled.div`
   width: 100%;
-  font-size: 2vw;
-  font-weight: bold;
+  height: 40px;
+  font-size: 1.8vw;
+  font-weight: 600;
   text-align: center;
   word-break: keep-all;
   padding: 5px 0px;
@@ -63,5 +77,7 @@ const MenuDetailInforWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: end;
+  padding: 0px 5px;
+  padding-bottom: 5px;
 `;
 export default CategoryMenuItem;

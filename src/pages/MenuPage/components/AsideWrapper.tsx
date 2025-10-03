@@ -54,6 +54,7 @@ const AsideCategory = styled.aside`
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+
   @media (max-height: 1000px) {
     & {
       border-right: 1px solid #009633;

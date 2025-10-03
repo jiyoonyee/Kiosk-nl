@@ -16,13 +16,18 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
 import "./idlestyle.css";
-import { useRef } from "react";
+
 import IdleMenuItem from "@/pages/IdlePage/components/IdleMenuItem";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface IdleData {
+  filename: string;
+  name: string;
+  price: string;
+}
 
 const IdlePage = () => {
-  const test = useRef(null);
-  console.log(test);
-
   const pagination = {
     el: ".swiper-pagination",
     clickable: true,
@@ -30,16 +35,28 @@ const IdlePage = () => {
       return '<span class="' + className + '"></span>';
     },
   };
+
+  const [idleData, setIdleData] = useState<IdleData[] | null>(null);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/products-idle/`)
+      .then((res) => {
+        console.log(res.data);
+        setIdleData(res.data);
+      });
+  }, []);
+  console.log(idleData && idleData);
   return (
     <>
       <PageWrapper>
         <IdleBackgroundContainer>
           <img src={CharLogoImg} alt="logo" />
           <Swiper
-            // autoplay={{
-            //   delay: 2000,
-            //   disableOnInteraction: false,
-            // }}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
             loop={true}
             style={{ width: "100%" }}
             effect={"coverflow"}
@@ -57,7 +74,19 @@ const IdlePage = () => {
             modules={[EffectCoverflow, Pagination, Autoplay]}
             className="mySwiper"
           >
-            <SwiperSlide>
+            {idleData &&
+              idleData.map((item, i) => (
+                <SwiperSlide>
+                  <IdleMenuItem
+                    key={i}
+                    filename={item.filename}
+                    name={item.name}
+                    price={item.price}
+                  />
+                </SwiperSlide>
+              ))}
+
+            {/* <SwiperSlide>
               <IdleMenuItem />
             </SwiperSlide>
             <SwiperSlide>
@@ -68,10 +97,7 @@ const IdlePage = () => {
             </SwiperSlide>
             <SwiperSlide>
               <IdleMenuItem />
-            </SwiperSlide>
-            <SwiperSlide>
-              <IdleMenuItem />
-            </SwiperSlide>
+            </SwiperSlide> */}
           </Swiper>
           <div className="swiper-pagination"></div>
         </IdleBackgroundContainer>

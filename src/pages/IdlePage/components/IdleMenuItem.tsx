@@ -1,15 +1,30 @@
 import styled from "styled-components";
-import MenuImg from "@/assets/images/MenuImg.png";
 import { PriceText } from "@/components/layouts/Layout";
 
-const IdleMenuItem = () => {
+interface IdleMenuInforProps {
+  filename: string;
+  name: string;
+  price: string;
+}
+
+interface MenuImage {
+  filename: string;
+}
+
+const IdleMenuItem: React.FC<IdleMenuInforProps> = ({
+  filename,
+  name,
+  price,
+}) => {
+  console.log(filename);
+  console.log(import.meta.env.VITE_API_URL + filename);
   return (
     <>
       <Wrap>
-        <MenuImgWrap></MenuImgWrap>
-        <MenuName>Morning Boost Smoothie Bowl</MenuName>
+        <MenuImgWrap filename={import.meta.env.VITE_API_URL + filename} />
+        <MenuName>{name}</MenuName>
         <TextWrap>
-          <PriceText style={{ fontSize: "5vw" }}>€4.50</PriceText>
+          <PriceText style={{ fontSize: "5vw" }}>€{price}</PriceText>
         </TextWrap>
       </Wrap>
     </>
@@ -37,12 +52,12 @@ const Wrap = styled.div`
   }
 `;
 
-const MenuImgWrap = styled.div`
+const MenuImgWrap = styled.div<MenuImage>`
   width: 100%;
   aspect-ratio: 1 / 1;
   /* background-color: blue; */
   border-radius: 2%;
-  background-image: url(${MenuImg});
+  background-image: url(${(props) => props.filename});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

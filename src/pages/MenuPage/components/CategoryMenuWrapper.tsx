@@ -1,20 +1,42 @@
 import styled from "styled-components";
 import CategoryMenuItem from "./CategoryMenuItem";
+import { type MenuItemInterface } from "../index";
+import MenuContext from "@/contexts/MenuContext";
 
-const CategoryMenuWrapper = () => {
+interface CategroyWrapProps {
+  name: string;
+  data: MenuItemInterface[];
+  $onChange: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
+  name,
+  data,
+  ...rest
+}) => {
+  // console.log(rest);
   return (
     <>
       <Wrap>
         <AllCategoryLine>
           <div></div>
           <div></div>
-          <div>Breakfast</div>
+          <div>{name}</div>
         </AllCategoryLine>
         <MenuItemWrap>
-          <CategoryMenuItem />
-          <CategoryMenuItem />
-          <CategoryMenuItem />
-          <CategoryMenuItem />
+          <MenuContext.Provider value={rest}>
+            {data.map((item, i) => (
+              <CategoryMenuItem
+                available={item.available}
+                filename={item.filename}
+                name={item.name}
+                kcal={item.kcal}
+                price={item.price}
+                product_id={item.product_id}
+                key={i}
+              />
+            ))}
+          </MenuContext.Provider>
         </MenuItemWrap>
       </Wrap>
     </>
@@ -25,6 +47,8 @@ const Wrap = styled.div`
   width: 100%;
   /* background-color: #dcdcdc66; // test */
   padding: 10px 30px;
+  padding-right: 20px;
+  margin-bottom: 20px;
 `;
 const AllCategoryLine = styled.div`
   width: 100%;
