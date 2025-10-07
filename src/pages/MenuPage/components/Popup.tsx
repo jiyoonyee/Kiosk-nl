@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import MenuDetailModal from "./MenuDetailModal";
 
-const Popup = () => {
+interface PopupProps {
+  updatePopupState: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ updatePopupState }) => {
   return (
     <>
-      <PopupBackground>
-        <MenuDetailModal />
-      </PopupBackground>
+      <PopupBackground onClick={updatePopupState}></PopupBackground>
+      <MenuDetailModal updatePopupState={updatePopupState} />
     </>
   );
 };

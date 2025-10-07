@@ -7,14 +7,17 @@ import shoppingcartImage from "@/assets/images/ShoppingCart.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Popup from "./components/Popup";
+import { GradiantButton } from "@/components/ui/Ui";
+import MenuContext from "@/contexts/MenuContext";
 
 export interface MenuItemInterface {
-  product_id: number;
-  available: boolean;
-  kcal: number;
-  price: string;
-  name: string;
-  filename: string;
+  product_id?: number;
+  available?: boolean;
+  kcal?: number;
+  price?: string;
+  name?: string;
+  filename?: string;
+  description?: string;
 }
 
 interface CategoryItem {
@@ -25,21 +28,11 @@ interface CategoryItem {
 const MenuPage = () => {
   const [selected, setSelected] = useState("ALL");
   const [menuData, setMenuData] = useState<CategoryItem[] | null>(null);
-  const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
-  const [popupState, setPopupState] = useState(true);
+  const [selectedMenuId, setSelectedMenuId] = useState<number>(0);
+  const [popupState, setPopupState] = useState(false);
 
-  const getMenuDetail = (menuId: number | null) => {
-    if (!selectedMenu) return;
-
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/product-detail`, {
-        params: {
-          id: menuId,
-        },
-      })
-      .then((res) => {
-        console.log(res.data[0]);
-      });
+  const updatePopupState = () => {
+    setPopupState((prev) => !prev);
   };
 
   useEffect(() => {
@@ -49,24 +42,27 @@ const MenuPage = () => {
         // console.log(res);
         setMenuData(res.data);
       });
-
-    getMenuDetail(selectedMenu);
-  }, [selectedMenu]);
-  // if (menuData) {
-  //   console.log([menuData]);
-  // }
+  }, []);
 
   return (
     <>
       <PageWrapper style={{ paddingTop: "10vh" }}>
-        {popupState && <Popup />}
+        <MenuContext.Provider
+          value={{
+            MenuId: selectedMenuId,
+          }}
+        >
+          {popupState && <Popup updatePopupState={updatePopupState} />}
+        </MenuContext.Provider>
+
         <MainWrapper>
           <AsdieWrapper value={selected} $onChange={setSelected} />
           <MenuWrapper>
             {menuData &&
               menuData.map((item, i) => (
                 <CategoryMenuWrapper
-                  $onChange={setSelectedMenu}
+                  updatePopupState={updatePopupState}
+                  $onChange={setSelectedMenuId}
                   name={item.name}
                   data={item.data}
                   key={i}
@@ -99,7 +95,9 @@ const MenuPage = () => {
                 <span>Would you like to add a drink?</span>
                 <SuggetionDrinkItem></SuggetionDrinkItem>
               </SuggestionDrinkWrapper>
-              <PaymentWrapper></PaymentWrapper>
+              <PaymentWrapper>
+                <GradiantButton />
+              </PaymentWrapper>
             </div>
           </MyOrderCheckWrapper>
         </MyOrderWrapper>
@@ -203,6 +201,7 @@ const PaymentWrapper = styled.div`
   border-top-left-radius: 15px;
   border: 2px solid black;
   border-bottom: none;
+  position: relative;
 `;
 
 export default MenuPage;

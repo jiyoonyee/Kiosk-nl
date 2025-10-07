@@ -6,18 +6,20 @@ import MenuContext from "@/contexts/MenuContext";
 interface CategroyWrapProps {
   name: string;
   data: MenuItemInterface[];
-  $onChange: React.Dispatch<React.SetStateAction<number | null>>;
+  $onChange: React.Dispatch<React.SetStateAction<number>>;
+  updatePopupState: () => void;
 }
 
 const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
   name,
   data,
+  updatePopupState,
   ...rest
 }) => {
   // console.log(rest);
   return (
     <>
-      <Wrap>
+      <Wrap id={name}>
         <AllCategoryLine>
           <div></div>
           <div></div>
@@ -27,6 +29,7 @@ const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
           <MenuContext.Provider value={rest}>
             {data.map((item, i) => (
               <CategoryMenuItem
+                updatePopupState={updatePopupState}
                 available={item.available}
                 filename={item.filename}
                 name={item.name}

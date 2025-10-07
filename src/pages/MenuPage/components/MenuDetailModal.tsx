@@ -1,42 +1,127 @@
 import styled from "styled-components";
 import { KcalText, ModalWrap, PriceText } from "@/components/layouts/Layout";
 import closeButtonImage from "@/assets/images/closeButton.png";
-import testImage from "@/assets/images/MenuImg.png";
-import GradiantButton from "@/components/ui/GradiantButton";
 
-const MenuDetailModal = () => {
+import { GradiantButton } from "@/components/ui/Ui";
+import QuantityButton from "@/components/ui/QuantityButton";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import MenuContext from "@/contexts/MenuContext";
+import axios from "axios";
+
+import type { MenuItemInterface } from "../index";
+import { useOrder } from "@/hooks/useOrder";
+
+interface detailProps {
+  updatePopupState: () => void;
+}
+
+const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
+  const [quantity, setQuantity] = useState(1);
+  const [menuData, setMenuData] = useState<MenuItemInterface>({
+    name: "",
+    kcal: 0,
+    price: "",
+    filename: "",
+    description: "",
+  });
+  const { orders, addOrder } = useOrder();
+
+  const UpdataQuantity = (quan: number) => {
+    if (quan > 0) setQuantity(quan);
+  };
+
+  const selecter = useContext(MenuContext);
+
+  const orderObject: { product_id: number | undefined; quantity: number } = {
+    product_id: 0,
+    quantity: 0,
+  };
+
+  const addOrderTest = () => {
+    orderObject.product_id = selecter.MenuId;
+    orderObject.quantity = quantity;
+
+    addOrder(orderObject);
+    console.log(orders);
+  };
+
+  useEffect(() => {
+    const getMenuDetail = (menuId: number) => {
+      if (!menuId) return;
+
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/api/product-detail`, {
+          params: {
+            id: menuId,
+          },
+        })
+        .then((res) => {
+          if (res.data[0]) {
+            setMenuData({
+              name: res.data[0].name,
+              kcal: res.data[0].kcal,
+              filename: res.data[0].filename,
+              price: res.data[0].price,
+              description: res.data[0].description,
+            });
+          }
+        });
+    };
+    if (typeof selecter.MenuId === "number") {
+      getMenuDetail(selecter.MenuId);
+    }
+  }, [selecter.MenuId]);
+
   return (
     <>
       <ModalWrap style={{ width: "80%", paddingBottom: "120px" }}>
         <ModalHeader>
-          <span>Roasted Chickpeas (Spicy or Herb)</span>
-          <img src={closeButtonImage} alt="closeButton" />
+          <span>{menuData.name}</span>
+          <img
+            onClick={updatePopupState}
+            src={closeButtonImage}
+            alt="closeButton"
+          />
         </ModalHeader>
         <ModalMainWrapper>
-          <img src={testImage} alt="MenuImage" />
-          <MenuDescription>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio eius
-            eveniet eos suscipit, aliquid perspiciatis itaque quas veniam maxime
-            nihil nam, corporis a dolorum animi modi voluptatibus!
-            Necessitatibus, tempore rerum!
-          </MenuDescription>
+          <img
+            src={import.meta.env.VITE_API_URL + menuData.filename}
+            alt="MenuImage"
+          />
+          <MenuDescription>{menuData.description}</MenuDescription>
           <MenuPriceInforWrapper>
             <div>
-              <PriceText style={{ fontSize: "4.5vw" }}>€4.50</PriceText>
-              <KcalText style={{ fontSize: "2.5vw" }}>300 Kcal</KcalText>
+              <PriceText style={{ fontSize: "4.5vw" }}>
+                €{menuData.price}
+              </PriceText>
+              <KcalText style={{ fontSize: "2.5vw" }}>
+                {menuData.kcal} Kcal
+              </KcalText>
             </div>
-            <div
-              style={{
-                width: "250px",
-                height: "80px",
-                backgroundColor: "green",
-              }}
-            >
-              test
-            </div>
+            <QuantityButton
+              ItemQuantity={quantity}
+              updateQuantity={UpdataQuantity}
+            />
           </MenuPriceInforWrapper>
         </ModalMainWrapper>
-        <GradiantButton />
+        <GradiantButton onClick={addOrderTest}>
+          <div>Add to Order</div>
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Total :{" "}
+            {menuData && menuData.price ? (
+              <PriceText style={{ display: "inline" }}>
+                €{(parseFloat(menuData.price) * quantity).toFixed(2)}
+              </PriceText>
+            ) : (
+              <PriceText style={{ display: "inline" }}>€0.00</PriceText>
+            )}
+          </div>
+        </GradiantButton>
       </ModalWrap>
     </>
   );

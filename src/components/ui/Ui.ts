@@ -1,18 +1,7 @@
 import styled from "styled-components";
 
-const GradiantButton = () => {
-  return (
-    <>
-      <ButtonWrap>
-        <div>test</div>
-        <div>test</div>
-      </ButtonWrap>
-    </>
-  );
-};
-
-const ButtonWrap = styled.div`
-  width: 100%;
+export const GradiantButton = styled.div`
+  width: calc(100%);
   // 임의값
 
   position: absolute;
@@ -20,11 +9,15 @@ const ButtonWrap = styled.div`
   /* bottom: 0; */
   transform: translateY(-20%);
   padding: 10px 15px;
-  z-index: 1000;
+
   background: linear-gradient(#85e071 50%, #bbe071);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   & > div {
-    font-size: 4vw;
+    font-size: 3vw;
     font-weight: bold;
   }
   &::after {
@@ -52,5 +45,3 @@ const ButtonWrap = styled.div`
     border-bottom-right-radius: 10px;
   }
 `;
-
-export default GradiantButton;

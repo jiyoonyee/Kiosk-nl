@@ -3,28 +3,31 @@ import styled from "styled-components";
 import { KcalText, PriceText } from "@/components/layouts/Layout";
 import { type MenuItemInterface } from "../index";
 import { useContext } from "react";
-import axios from "axios";
+
 import MenuContext from "@/contexts/MenuContext";
 
-const CategoryMenuItem: React.FC<MenuItemInterface> = ({
-  available,
+interface CategoryMenuItemProps extends MenuItemInterface {
+  updatePopupState: () => void;
+}
+
+const CategoryMenuItem: React.FC<CategoryMenuItemProps> = ({
   filename,
   kcal,
   name,
   price,
   product_id,
+  updatePopupState,
 }) => {
-  // const [menuId, setMenuId] = useState<number | null>(null);
   const selecter = useContext(MenuContext);
 
-  // useEffect(() => {
-  //   if (product_id) setMenuId(product_id);
-  //   // if (menuId) console.log(menuId);
-  // }, [menuId]);
+  const ItemClickEvent = () => {
+    if (product_id) selecter?.$onChange?.(product_id);
+    updatePopupState();
+  };
 
   return (
     <>
-      <Wrap onClick={() => selecter?.$onChange?.(product_id)}>
+      <Wrap onClick={ItemClickEvent}>
         <img
           style={{ borderBottom: "1px solid black" }}
           src={import.meta.env.VITE_API_URL + filename}
