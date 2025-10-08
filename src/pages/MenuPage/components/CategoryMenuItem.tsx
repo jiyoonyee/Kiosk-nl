@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { KcalText, PriceText } from "@/components/layouts/Layout";
+import { KcalText, PriceText } from "@/components/ui/Ui";
 import { type MenuItemInterface } from "../index";
 import { useContext } from "react";
 

@@ -4,11 +4,13 @@ import AsdieWrapper from "./components/AsideWrapper";
 import CategoryMenuWrapper from "./components/CategoryMenuWrapper";
 import shoppingcartImage from "@/assets/images/ShoppingCart.png";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Popup from "./components/Popup";
 import { GradiantButton } from "@/components/ui/Ui";
 import MenuContext from "@/contexts/MenuContext";
+import { useOrder } from "@/hooks/useOrder";
+import OrderItem from "./components/OrderItem";
 
 export interface MenuItemInterface {
   product_id?: number;
@@ -31,6 +33,9 @@ const MenuPage = () => {
   const [selectedMenuId, setSelectedMenuId] = useState<number>(0);
   const [popupState, setPopupState] = useState(false);
 
+  const { orders } = useOrder();
+  const orderListRef = useRef<HTMLDivElement>(null);
+
   const updatePopupState = () => {
     setPopupState((prev) => !prev);
   };
@@ -42,7 +47,10 @@ const MenuPage = () => {
         // console.log(res);
         setMenuData(res.data);
       });
-  }, []);
+    if (orderListRef.current) {
+      orderListRef.current.scrollTop = orderListRef.current.scrollHeight;
+    }
+  }, [orders]);
 
   return (
     <>
@@ -82,7 +90,17 @@ const MenuPage = () => {
             </span>
           </div>
           <MyOrderCheckWrapper>
-            <MyOrderMenuList></MyOrderMenuList>
+            <MyOrderMenuList ref={orderListRef}>
+              {orders.map((data, i) => (
+                <OrderItem
+                  menuName={data.menuName ?? ""}
+                  price={data.price ?? 0}
+                  product_id={data.product_id ?? 0}
+                  quantity={data.quantity}
+                  key={i}
+                />
+              ))}
+            </MyOrderMenuList>
             <div
               style={{
                 width: "30%",
@@ -96,7 +114,11 @@ const MenuPage = () => {
                 <SuggetionDrinkItem></SuggetionDrinkItem>
               </SuggestionDrinkWrapper>
               <PaymentWrapper>
-                <GradiantButton />
+                <GradiantButton
+                  onClick={() => {
+                    console.log(orders);
+                  }}
+                />
               </PaymentWrapper>
             </div>
           </MyOrderCheckWrapper>
@@ -153,6 +175,7 @@ const MyOrderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  overflow: hidden;
 `;
 
 const MyOrderCheckWrapper = styled.div`
@@ -166,11 +189,17 @@ const MyOrderCheckWrapper = styled.div`
 
 const MyOrderMenuList = styled.div`
   width: 70%;
-  height: 100%;
+  max-height: 100%;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   border: 2px solid black;
   border-bottom: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* transform: translateY(-100px); */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SuggestionDrinkWrapper = styled.div`

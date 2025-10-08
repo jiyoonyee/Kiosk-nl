@@ -1,7 +1,12 @@
 // src/context/OrderContext.tsx
 import { createContext } from "react";
 
-type orderInfo = { product_id: number | undefined; quantity: number };
+type orderInfo = {
+  product_id: number | undefined;
+  quantity: number;
+  menuName: string | undefined;
+  price: number | undefined;
+};
 
 // Context의 타입 정의
 type OrderContextType = {

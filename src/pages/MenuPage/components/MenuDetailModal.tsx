@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { KcalText, ModalWrap, PriceText } from "@/components/layouts/Layout";
+import { ModalWrap } from "@/components/layouts/Layout";
+import { KcalText, PriceText } from "@/components/ui/Ui";
 import closeButtonImage from "@/assets/images/closeButton.png";
 
 import { GradiantButton } from "@/components/ui/Ui";
@@ -25,29 +26,38 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
     filename: "",
     description: "",
   });
-  const { orders, addOrder } = useOrder();
+  const { addOrder } = useOrder();
 
   const UpdataQuantity = (quan: number) => {
-    if (quan > 0) setQuantity(quan);
+    if (quan > 0 && quan < 100) setQuantity(quan);
   };
 
   const selecter = useContext(MenuContext);
 
-  const orderObject: { product_id: number | undefined; quantity: number } = {
+  const orderObject: {
+    menuName: string | undefined;
+    price: number | undefined;
+    product_id: number | undefined;
+    quantity: number;
+  } = {
     product_id: 0,
     quantity: 0,
+    price: 0,
+    menuName: "none",
   };
 
   const addOrderTest = () => {
     orderObject.product_id = selecter.MenuId;
     orderObject.quantity = quantity;
+    orderObject.menuName = menuData.name;
+    orderObject.price = parseFloat(menuData.price ?? "0");
 
     addOrder(orderObject);
-    console.log(orders);
+    updatePopupState();
   };
 
   useEffect(() => {
-    const getMenuDetail = (menuId: number) => {
+    const getMenuDetail = (menuId: number | undefined) => {
       if (!menuId) return;
 
       axios
@@ -68,9 +78,8 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
           }
         });
     };
-    if (typeof selecter.MenuId === "number") {
-      getMenuDetail(selecter.MenuId);
-    }
+
+    getMenuDetail(selecter.MenuId);
   }, [selecter.MenuId]);
 
   return (

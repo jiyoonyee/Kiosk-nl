@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const PriceText = styled.div`
+  font-weight: bold;
+  color: #ff7520;
+  text-align: center;
+`;
+
+export const KcalText = styled.div`
+  font-weight: 600;
+  color: #009633;
+  text-align: center;
+`;
+
 export const GradiantButton = styled.div`
   width: calc(100%);
   // 임의값

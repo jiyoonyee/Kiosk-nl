@@ -1,7 +1,12 @@
 import { useState, type ReactNode } from "react";
 import { OrderContext } from "./OrderContext";
 
-type orderInfo = { product_id: number | undefined; quantity: number };
+type orderInfo = {
+  menuName: string | undefined;
+  price: number | undefined;
+  product_id: number | undefined;
+  quantity: number;
+};
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<orderInfo[]>([]);

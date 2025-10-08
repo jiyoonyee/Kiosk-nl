@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PriceText } from "@/components/layouts/Layout";
+import { PriceText } from "@/components/ui/Ui";
 
 interface IdleMenuInforProps {
   filename: string;
