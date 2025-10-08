@@ -35,25 +35,27 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
   const selecter = useContext(MenuContext);
 
   const orderObject: {
-    menuName: string | undefined;
-    price: number | undefined;
+    menuName: string | null;
+    price: number;
     product_id: number | undefined;
     quantity: number;
   } = {
     product_id: 0,
     quantity: 0,
     price: 0,
-    menuName: "none",
+    menuName: null,
   };
 
   const addOrderTest = () => {
     orderObject.product_id = selecter.MenuId;
     orderObject.quantity = quantity;
-    orderObject.menuName = menuData.name;
+    orderObject.menuName = menuData.name ?? null;
     orderObject.price = parseFloat(menuData.price ?? "0");
 
-    addOrder(orderObject);
-    updatePopupState();
+    if (orderObject.menuName) {
+      addOrder(orderObject);
+      updatePopupState();
+    }
   };
 
   useEffect(() => {
@@ -114,7 +116,7 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
             />
           </MenuPriceInforWrapper>
         </ModalMainWrapper>
-        <GradiantButton onClick={addOrderTest}>
+        <GradiantButton $sideWidth={3} onClick={addOrderTest}>
           <div>Add to Order</div>
           <div
             style={{

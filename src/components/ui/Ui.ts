@@ -12,14 +12,16 @@ export const KcalText = styled.div`
   text-align: center;
 `;
 
-export const GradiantButton = styled.div`
-  width: calc(100%);
-  // 임의값
+interface buttonProps {
+  $sideWidth: number;
+}
 
+export const GradiantButton = styled.div<buttonProps>`
+  width: 102%;
   position: absolute;
-  left: 0;
+  left: 50%;
   /* bottom: 0; */
-  transform: translateY(-20%);
+  transform: translateY(-20%) translateX(-50%);
   padding: 10px 15px;
 
   background: linear-gradient(#85e071 50%, #bbe071);
@@ -27,30 +29,28 @@ export const GradiantButton = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-size: 3vw;
+  font-weight: bold;
 
-  & > div {
-    font-size: 3vw;
-    font-weight: bold;
-  }
   &::after {
     content: "";
     height: 100%;
-    width: 3%;
+    width: ${(props) => props.$sideWidth}%;
     position: absolute;
     background: linear-gradient(#85e071 50%, #bbe071);
     top: 0;
-    left: -3%;
+    left: -${(props) => props.$sideWidth}%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
   &::before {
     content: "";
     height: 110%;
-    width: 3%;
+    width: ${(props) => props.$sideWidth}%;
     position: absolute;
     background: linear-gradient(#85e071 40%, #bbe071);
     top: 0;
-    right: -3%;
+    right: -${(props) => props.$sideWidth - 1}%;
     z-index: 500;
     /* transform: translateX(99%); */
     border-top-right-radius: 10px;

@@ -7,7 +7,7 @@ import shoppingcartImage from "@/assets/images/ShoppingCart.png";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Popup from "./components/Popup";
-import { GradiantButton } from "@/components/ui/Ui";
+import { GradiantButton, PriceText } from "@/components/ui/Ui";
 import MenuContext from "@/contexts/MenuContext";
 import { useOrder } from "@/hooks/useOrder";
 import OrderItem from "./components/OrderItem";
@@ -33,7 +33,8 @@ const MenuPage = () => {
   const [selectedMenuId, setSelectedMenuId] = useState<number>(0);
   const [popupState, setPopupState] = useState(false);
 
-  const { orders } = useOrder();
+  const { orders, total } = useOrder();
+
   const orderListRef = useRef<HTMLDivElement>(null);
 
   const updatePopupState = () => {
@@ -115,10 +116,24 @@ const MenuPage = () => {
               </SuggestionDrinkWrapper>
               <PaymentWrapper>
                 <GradiantButton
-                  onClick={() => {
-                    console.log(orders);
+                  $sideWidth={7}
+                  style={{
+                    bottom: "0",
                   }}
-                />
+                >
+                  <span
+                    style={{
+                      fontSize: "2vw",
+                      fontWeight: "bold",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Proceed to Payment
+                  </span>
+                  <PriceText style={{ fontSize: "2.5vw" }}>
+                    €{total.toFixed(2)}
+                  </PriceText>
+                </GradiantButton>
               </PaymentWrapper>
             </div>
           </MyOrderCheckWrapper>
