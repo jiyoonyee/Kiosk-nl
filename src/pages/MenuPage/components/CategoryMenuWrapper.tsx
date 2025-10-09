@@ -7,7 +7,7 @@ interface CategroyWrapProps {
   name: string;
   data: MenuItemInterface[];
   $onChange: React.Dispatch<React.SetStateAction<number>>;
-  updatePopupState: () => void;
+  updatePopupState: (modalName: string | null) => void;
 }
 
 const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({

@@ -27,18 +27,30 @@ interface CategoryItem {
   data: MenuItemInterface[];
 }
 
+interface popup {
+  state: boolean;
+  modalState: string | null;
+}
+
 const MenuPage = () => {
   const [selected, setSelected] = useState("ALL");
   const [menuData, setMenuData] = useState<CategoryItem[] | null>(null);
   const [selectedMenuId, setSelectedMenuId] = useState<number>(0);
-  const [popupState, setPopupState] = useState(false);
+  const [popupState, setPopupState] = useState<popup>({
+    state: false,
+    modalState: null,
+  });
 
   const { orders, total } = useOrder();
 
   const orderListRef = useRef<HTMLDivElement>(null);
 
-  const updatePopupState = () => {
-    setPopupState((prev) => !prev);
+  const updatePopupState = (modalName: string | null) => {
+    setPopupState({
+      ...popupState,
+      state: !popupState.state,
+      modalState: modalName ?? null,
+    });
   };
 
   useEffect(() => {
@@ -61,7 +73,12 @@ const MenuPage = () => {
             MenuId: selectedMenuId,
           }}
         >
-          {popupState && <Popup updatePopupState={updatePopupState} />}
+          {popupState.state && (
+            <Popup
+              modalName={popupState.modalState}
+              updatePopupState={updatePopupState}
+            />
+          )}
         </MenuContext.Provider>
 
         <MainWrapper>
@@ -116,6 +133,9 @@ const MenuPage = () => {
               </SuggestionDrinkWrapper>
               <PaymentWrapper>
                 <GradiantButton
+                  onClick={() => {
+                    updatePopupState("orderListModal");
+                  }}
                   $sideWidth={7}
                   style={{
                     bottom: "0",

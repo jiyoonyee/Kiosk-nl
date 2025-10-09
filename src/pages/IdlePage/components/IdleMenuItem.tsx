@@ -16,8 +16,6 @@ const IdleMenuItem: React.FC<IdleMenuInforProps> = ({
   name,
   price,
 }) => {
-  console.log(filename);
-  console.log(import.meta.env.VITE_API_URL + filename);
   return (
     <>
       <Wrap>

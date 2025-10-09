@@ -1,15 +1,26 @@
 import styled from "styled-components";
 import MenuDetailModal from "./MenuDetailModal";
+import OrderListModal from "./OrderListModal";
 
 interface PopupProps {
-  updatePopupState: () => void;
+  modalName: string | null;
+  updatePopupState: (modalName: string | null) => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ updatePopupState }) => {
+const Popup: React.FC<PopupProps> = ({ updatePopupState, modalName }) => {
   return (
     <>
-      <PopupBackground onClick={updatePopupState}></PopupBackground>
-      <MenuDetailModal updatePopupState={updatePopupState} />
+      <PopupBackground
+        onClick={() => {
+          updatePopupState(modalName);
+        }}
+      ></PopupBackground>
+      {modalName === "orderListModal" && (
+        <OrderListModal updatePopupState={updatePopupState} />
+      )}
+      {modalName === "detailModal" && (
+        <MenuDetailModal updatePopupState={updatePopupState} />
+      )}
     </>
   );
 };

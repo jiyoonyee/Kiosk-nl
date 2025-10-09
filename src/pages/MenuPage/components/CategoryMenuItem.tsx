@@ -7,7 +7,7 @@ import { useContext } from "react";
 import MenuContext from "@/contexts/MenuContext";
 
 interface CategoryMenuItemProps extends MenuItemInterface {
-  updatePopupState: () => void;
+  updatePopupState: (modalName: string | null) => void;
 }
 
 const CategoryMenuItem: React.FC<CategoryMenuItemProps> = ({
@@ -22,7 +22,7 @@ const CategoryMenuItem: React.FC<CategoryMenuItemProps> = ({
 
   const ItemClickEvent = () => {
     if (product_id) selecter?.$onChange?.(product_id);
-    updatePopupState();
+    updatePopupState("detailModal");
   };
 
   return (

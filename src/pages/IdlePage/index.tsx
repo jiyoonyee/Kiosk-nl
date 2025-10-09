@@ -42,11 +42,9 @@ const IdlePage = () => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/api/products-idle/`)
       .then((res) => {
-        console.log(res.data);
         setIdleData(res.data);
       });
   }, []);
-  console.log(idleData && idleData);
   return (
     <>
       <PageWrapper>

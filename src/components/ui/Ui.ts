@@ -13,6 +13,7 @@ export const KcalText = styled.div`
 `;
 
 interface buttonProps {
+  $bottomMargin?: string;
   $sideWidth: number;
 }
 
@@ -20,8 +21,11 @@ export const GradiantButton = styled.div<buttonProps>`
   width: 102%;
   position: absolute;
   left: 50%;
-  /* bottom: 0; */
-  transform: translateY(-20%) translateX(-50%);
+  bottom: 0;
+  transform: translateY(
+      ${(props) => (props.$bottomMargin ? props.$bottomMargin : "-20%")}
+    )
+    translateX(-50%);
   padding: 10px 15px;
 
   background: linear-gradient(#85e071 50%, #bbe071);

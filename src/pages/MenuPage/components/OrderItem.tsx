@@ -1,7 +1,7 @@
 import QuantityButton from "@/components/ui/QuantityButton";
 import { PriceText } from "@/components/ui/Ui";
 import { useOrder } from "@/hooks/useOrder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface OrderItemProps {
@@ -17,8 +17,13 @@ const OrderItem: React.FC<OrderItemProps> = ({
   price,
   quantity,
 }) => {
-  const [itmeQuantity, setItemQuantity] = useState(quantity);
   const { updateOrder } = useOrder();
+  const [itemQuantity, setItemQuantity] = useState(quantity);
+
+  useEffect(() => {
+    setItemQuantity(quantity);
+  }, [quantity]);
+
   const UpdataQuantity = (quan: number) => {
     if (quan > 0 && quan < 100) {
       setItemQuantity(quan);
@@ -31,11 +36,11 @@ const OrderItem: React.FC<OrderItemProps> = ({
         <MenuNameContainer>{menuName}</MenuNameContainer>
         <QuantityWrap>
           <PriceText style={{ fontSize: "2.2vw" }}>
-            €{(price * itmeQuantity).toFixed(2)}
+            €{(price * itemQuantity).toFixed(2)}
           </PriceText>
           <QuantityButton
             boxSize={4}
-            ItemQuantity={itmeQuantity}
+            ItemQuantity={itemQuantity}
             updateQuantity={UpdataQuantity}
           />
         </QuantityWrap>

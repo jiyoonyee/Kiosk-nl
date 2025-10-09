@@ -14,7 +14,7 @@ import type { MenuItemInterface } from "../index";
 import { useOrder } from "@/hooks/useOrder";
 
 interface detailProps {
-  updatePopupState: () => void;
+  updatePopupState: (modalName: string | null) => void;
 }
 
 const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
@@ -35,26 +35,35 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
   const selecter = useContext(MenuContext);
 
   const orderObject: {
-    menuName: string | null;
+    menuName: string;
     price: number;
-    product_id: number | undefined;
+    product_id: number;
     quantity: number;
+    kcal: number;
+    description: string;
+    filePath: string;
   } = {
+    menuName: "",
+    price: 0,
     product_id: 0,
     quantity: 0,
-    price: 0,
-    menuName: null,
+    kcal: 0,
+    description: "",
+    filePath: "",
   };
 
   const addOrderTest = () => {
-    orderObject.product_id = selecter.MenuId;
+    orderObject.product_id = selecter.MenuId ?? 0;
     orderObject.quantity = quantity;
-    orderObject.menuName = menuData.name ?? null;
+    orderObject.menuName = menuData.name ?? "";
     orderObject.price = parseFloat(menuData.price ?? "0");
+    orderObject.kcal = menuData.kcal ?? 0;
+    orderObject.description = menuData.description ?? "";
+    orderObject.filePath = menuData.filename ?? "";
 
-    if (orderObject.menuName) {
+    if (orderObject.menuName !== "") {
       addOrder(orderObject);
-      updatePopupState();
+      updatePopupState("detailModal");
     }
   };
 
@@ -86,11 +95,13 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
 
   return (
     <>
-      <ModalWrap style={{ width: "80%", paddingBottom: "120px" }}>
+      <ModalWrap style={{ width: "80%", paddingBottom: "80px" }}>
         <ModalHeader>
           <span>{menuData.name}</span>
           <img
-            onClick={updatePopupState}
+            onClick={() => {
+              updatePopupState("detailModal");
+            }}
             src={closeButtonImage}
             alt="closeButton"
           />
@@ -116,7 +127,11 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
             />
           </MenuPriceInforWrapper>
         </ModalMainWrapper>
-        <GradiantButton $sideWidth={3} onClick={addOrderTest}>
+        <GradiantButton
+          $bottomMargin="-20%"
+          $sideWidth={3}
+          onClick={addOrderTest}
+        >
           <div>Add to Order</div>
           <div
             style={{
