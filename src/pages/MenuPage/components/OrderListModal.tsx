@@ -7,6 +7,7 @@ import { GradiantButton, PriceText } from "@/components/ui/Ui";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import "../loadingStyle.css";
 
 interface OrderListProps {
   updatePopupState: (modalName: string | null) => void;
@@ -15,7 +16,10 @@ interface OrderListProps {
 const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
   const { orders, total, updateOrderNumber } = useOrder();
   const navigate = useNavigate();
-  const [sendState, setSendState] = useState<boolean>(false);
+  const [sendState, setSendState] = useState(false);
+  const [loadingText, setLoadingText] = useState(
+    "Sending Processing your order"
+  );
 
   const sendOrderData = () => {
     if (sendState) return;
@@ -26,6 +30,17 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
 
     setSendState((prev) => !prev);
 
+    let second: number = 0;
+    const loadingTextTimer = setInterval(() => {
+      setLoadingText((prev) => prev + ".");
+      if (second === 3) {
+        second = 0;
+        setLoadingText("Sending Processing your order");
+      }
+
+      second++;
+    }, 1000);
+
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/orders/`, {
         items: newItem,
@@ -33,21 +48,37 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
       .then((res) => {
         console.log(res);
         if (res.status === 201) {
-          setSendState((prev) => !prev);
-          updateOrderNumber(res.data.order_id);
-          navigate("/order_number");
+          setTimeout(() => {
+            setSendState((prev) => !prev);
+            updateOrderNumber(res.data.order_id);
+            navigate("/order_number");
+            clearInterval(loadingTextTimer);
+          }, 5000);
         }
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
   return (
     <>
+      {sendState && (
+        <LoadingLayout>
+          <div className="loader"></div>
+          <div
+            style={{
+              fontSize: "5vw",
+              fontWeight: "bold",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            {loadingText}
+          </div>
+        </LoadingLayout>
+      )}
       <ModalWrap style={{ width: "90%", height: "70%" }}>
-        {sendState && (
-          <div style={{ fontSize: "4vw", position: "absolute" }}>보내는중</div>
-        )}
         <PopupHeader>
           <img
             src={backButton}
@@ -108,6 +139,23 @@ const ItemListWrap = styled.div`
   margin-bottom: 50px;
   overflow-y: scroll;
   overflow-x: hidden;
+`;
+
+const LoadingLayout = styled.div`
+  position: fixed;
+  z-index: 1200;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0px 100px;
 `;
 
 export default OrderListModal;

@@ -65,6 +65,14 @@ const MenuPage = () => {
     }
   }, [orders]);
 
+  const openPayment = () => {
+    if (total === 0) {
+      alert("you not have order item");
+      return;
+    }
+    updatePopupState("orderListModal");
+  };
+
   return (
     <>
       <PageWrapper style={{ paddingTop: "10vh" }}>
@@ -109,15 +117,31 @@ const MenuPage = () => {
           </div>
           <MyOrderCheckWrapper>
             <MyOrderMenuList ref={orderListRef}>
-              {orders.map((data, i) => (
-                <OrderItem
-                  menuName={data.menuName ?? ""}
-                  price={data.price ?? 0}
-                  product_id={data.product_id ?? 0}
-                  quantity={data.quantity}
-                  key={i}
-                />
-              ))}
+              {orders.length == 0 ? (
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "5vw",
+                    fontWeight: "bold",
+                  }}
+                >
+                  please select menu
+                </div>
+              ) : (
+                orders.map((data, i) => (
+                  <OrderItem
+                    menuName={data.menuName ?? ""}
+                    price={data.price ?? 0}
+                    product_id={data.product_id ?? 0}
+                    quantity={data.quantity}
+                    key={i}
+                  />
+                ))
+              )}
             </MyOrderMenuList>
             <div
               style={{
@@ -133,11 +157,10 @@ const MenuPage = () => {
               </SuggestionDrinkWrapper>
               <PaymentWrapper>
                 <GradiantButton
-                  onClick={() => {
-                    updatePopupState("orderListModal");
-                  }}
+                  onClick={openPayment}
                   $sideWidth={7}
                   style={{
+                    filter: total === 0 ? "grayscale(50%)" : "none",
                     bottom: "0",
                   }}
                 >

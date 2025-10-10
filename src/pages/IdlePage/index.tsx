@@ -50,30 +50,30 @@ const IdlePage = () => {
       <PageWrapper>
         <IdleBackgroundContainer>
           <img src={CharLogoImg} alt="logo" />
-          <Swiper
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-            style={{ width: "100%" }}
-            effect={"coverflow"}
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={"auto"}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            pagination={pagination}
-            modules={[EffectCoverflow, Pagination, Autoplay]}
-            className="mySwiper"
-          >
-            {idleData &&
-              idleData.map((item, i) => (
+          {idleData && (
+            <Swiper
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              style={{ width: "100%" }}
+              effect={"coverflow"}
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={"auto"}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              pagination={pagination}
+              modules={[EffectCoverflow, Pagination, Autoplay]}
+              className="mySwiper"
+            >
+              {idleData.map((item, i) => (
                 <SwiperSlide>
                   <IdleMenuItem
                     key={i}
@@ -83,20 +83,9 @@ const IdlePage = () => {
                   />
                 </SwiperSlide>
               ))}
+            </Swiper>
+          )}
 
-            {/* <SwiperSlide>
-              <IdleMenuItem />
-            </SwiperSlide>
-            <SwiperSlide>
-              <IdleMenuItem />
-            </SwiperSlide>
-            <SwiperSlide>
-              <IdleMenuItem />
-            </SwiperSlide>
-            <SwiperSlide>
-              <IdleMenuItem />
-            </SwiperSlide> */}
-          </Swiper>
           <div className="swiper-pagination"></div>
         </IdleBackgroundContainer>
         <OrderWrapper>

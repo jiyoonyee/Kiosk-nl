@@ -8,7 +8,7 @@ interface IdleMenuInforProps {
 }
 
 interface MenuImage {
-  filename: string;
+  $filename: string;
 }
 
 const IdleMenuItem: React.FC<IdleMenuInforProps> = ({
@@ -19,7 +19,7 @@ const IdleMenuItem: React.FC<IdleMenuInforProps> = ({
   return (
     <>
       <Wrap>
-        <MenuImgWrap filename={import.meta.env.VITE_API_URL + filename} />
+        <MenuImgWrap $filename={import.meta.env.VITE_API_URL + filename} />
         <MenuName>{name}</MenuName>
         <TextWrap>
           <PriceText style={{ fontSize: "5vw" }}>€{price}</PriceText>
@@ -55,7 +55,7 @@ const MenuImgWrap = styled.div<MenuImage>`
   aspect-ratio: 1 / 1;
   /* background-color: blue; */
   border-radius: 2%;
-  background-image: url(${(props) => props.filename});
+  background-image: url(${(props) => props.$filename});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

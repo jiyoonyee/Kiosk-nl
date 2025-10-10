@@ -10,7 +10,7 @@ export const ModalWrap = styled.div`
   background-color: #ffffff;
   border-radius: 10px;
   padding: 40px;
-  position: fixed;
+  position: absolute;
   z-index: 1100;
   top: 50%;
   left: 50%;
