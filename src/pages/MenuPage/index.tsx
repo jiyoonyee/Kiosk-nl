@@ -7,10 +7,20 @@ import shoppingcartImage from "@/assets/images/ShoppingCart.png";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Popup from "./components/Popup";
-import { GradiantButton, PriceText } from "@/components/ui/Ui";
-import MenuContext from "@/contexts/MenuContext";
+import { GradiantButton, KcalText, PriceText } from "@/components/ui/Ui";
+import MenuContext from "@/contexts/MenuDetailContext";
 import { useOrder } from "@/hooks/useOrder";
 import OrderItem from "./components/OrderItem";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import "./swiperStyle.css";
+
+// import required modules
 
 export interface MenuItemInterface {
   product_id?: number;
@@ -40,6 +50,7 @@ const MenuPage = () => {
     state: false,
     modalState: null,
   });
+  const [drinkData, setDrinkData] = useState<MenuItemInterface[] | null>(null);
 
   const { orders, total } = useOrder();
 
@@ -55,11 +66,22 @@ const MenuPage = () => {
 
   useEffect(() => {
     axios
+      .get(`${import.meta.env.VITE_API_URL}/api/products-category`, {
+        params: { category: "Drinks" },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setDrinkData(res.data);
+      });
+    axios
       .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
       .then((res) => {
         // console.log(res);
         setMenuData(res.data);
       });
+  }, []);
+
+  useEffect(() => {
     if (orderListRef.current) {
       orderListRef.current.scrollTop = orderListRef.current.scrollHeight;
     }
@@ -75,113 +97,164 @@ const MenuPage = () => {
 
   return (
     <>
-      <PageWrapper style={{ paddingTop: "10vh" }}>
-        <MenuContext.Provider
-          value={{
-            MenuId: selectedMenuId,
-          }}
-        >
+      <MenuContext.Provider
+        value={{
+          $onChange: setSelectedMenuId,
+          MenuId: selectedMenuId,
+        }}
+      >
+        <PageWrapper style={{ paddingTop: "10vh" }}>
           {popupState.state && (
             <Popup
               modalName={popupState.modalState}
               updatePopupState={updatePopupState}
             />
           )}
-        </MenuContext.Provider>
 
-        <MainWrapper>
-          <AsdieWrapper value={selected} $onChange={setSelected} />
-          <MenuWrapper>
-            {menuData &&
-              menuData.map((item, i) => (
-                <CategoryMenuWrapper
-                  updatePopupState={updatePopupState}
-                  $onChange={setSelectedMenuId}
-                  name={item.name}
-                  data={item.data}
-                  key={i}
-                />
-              ))}
-          </MenuWrapper>
-        </MainWrapper>
-        <MyOrderWrapper>
-          <div style={{ display: "flex", alignItems: "center", gap: "1%" }}>
-            <img
-              style={{ width: "4vw", aspectRatio: "1/1" }}
-              src={shoppingcartImage}
-              alt="쇼핑카트"
-            />
-            <span style={{ fontSize: "3vw", fontWeight: "bold" }}>
-              My Order
-            </span>
-          </div>
-          <MyOrderCheckWrapper>
-            <MyOrderMenuList ref={orderListRef}>
-              {orders.length == 0 ? (
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: "5vw",
-                    fontWeight: "bold",
-                  }}
-                >
-                  please select menu
-                </div>
-              ) : (
-                orders.map((data, i) => (
-                  <OrderItem
-                    menuName={data.menuName ?? ""}
-                    price={data.price ?? 0}
-                    product_id={data.product_id ?? 0}
-                    quantity={data.quantity}
+          <MainWrapper>
+            <AsdieWrapper value={selected} $onChange={setSelected} />
+
+            <MenuWrapper>
+              {menuData &&
+                menuData.map((item, i) => (
+                  <CategoryMenuWrapper
+                    updatePopupState={updatePopupState}
+                    name={item.name}
+                    data={item.data}
                     key={i}
                   />
-                ))
-              )}
-            </MyOrderMenuList>
-            <div
-              style={{
-                width: "30%",
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}
-            >
-              <SuggestionDrinkWrapper>
-                <span>Would you like to add a drink?</span>
-                <SuggetionDrinkItem></SuggetionDrinkItem>
-              </SuggestionDrinkWrapper>
-              <PaymentWrapper>
-                <GradiantButton
-                  onClick={openPayment}
-                  $sideWidth={7}
-                  style={{
-                    filter: total === 0 ? "grayscale(50%)" : "none",
-                    bottom: "0",
-                  }}
-                >
-                  <span
+                ))}
+            </MenuWrapper>
+          </MainWrapper>
+          <MyOrderWrapper>
+            <div style={{ display: "flex", alignItems: "center", gap: "1%" }}>
+              <img
+                style={{ width: "4vw", aspectRatio: "1/1" }}
+                src={shoppingcartImage}
+                alt="쇼핑카트"
+              />
+              <span style={{ fontSize: "3vw", fontWeight: "bold" }}>
+                My Order
+              </span>
+            </div>
+            <MyOrderCheckWrapper>
+              <MyOrderMenuList ref={orderListRef}>
+                {orders.length == 0 ? (
+                  <div
                     style={{
-                      fontSize: "2vw",
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontSize: "5vw",
                       fontWeight: "bold",
-                      marginBottom: "10px",
                     }}
                   >
-                    Proceed to Payment
-                  </span>
-                  <PriceText style={{ fontSize: "2.5vw" }}>
-                    €{total.toFixed(2)}
-                  </PriceText>
-                </GradiantButton>
-              </PaymentWrapper>
-            </div>
-          </MyOrderCheckWrapper>
-        </MyOrderWrapper>
-      </PageWrapper>
+                    please select menu
+                  </div>
+                ) : (
+                  orders.map((data, i) => (
+                    <OrderItem
+                      menuName={data.menuName ?? ""}
+                      price={data.price ?? 0}
+                      product_id={data.product_id ?? 0}
+                      quantity={data.quantity}
+                      key={i}
+                    />
+                  ))
+                )}
+              </MyOrderMenuList>
+              <div
+                style={{
+                  width: "30%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                <SuggestionDrinkWrapper>
+                  <span>Would you like to add a drink?</span>
+                  <SuggetionDrinkItem>
+                    <Swiper
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      spaceBetween={30}
+                      effect={"fade"}
+                      navigation={true}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      modules={[EffectFade, Autoplay]}
+                      className="mySwiper drinkSwiper"
+                    >
+                      {drinkData &&
+                        drinkData.map((item, i) => (
+                          <SwiperSlide
+                            key={i}
+                            className="drinkSwiper"
+                            onClick={() => {
+                              console.log(item.product_id);
+                              if (item.product_id) {
+                                setSelectedMenuId(item.product_id);
+                                updatePopupState("detailModal");
+                              }
+                            }}
+                          >
+                            <div
+                              className="drinkImageContainer"
+                              style={{
+                                backgroundImage: `url(${
+                                  import.meta.env.VITE_API_URL + item.filename
+                                })`,
+                              }}
+                            ></div>
+                            <div className="drinkInforWrap">
+                              <span className="drinkName">{item.name}</span>
+                              <div className="drinkPriceInforWrap">
+                                <KcalText style={{ fontSize: "2vw" }}>
+                                  {item.kcal}kcal
+                                </KcalText>
+                                <PriceText style={{ fontSize: "2.5vw" }}>
+                                  €{item.price}
+                                </PriceText>
+                              </div>
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                    </Swiper>
+                  </SuggetionDrinkItem>
+                </SuggestionDrinkWrapper>
+                <PaymentWrapper>
+                  <GradiantButton
+                    onClick={openPayment}
+                    $sideWidth={7}
+                    style={{
+                      filter: total === 0 ? "grayscale(50%)" : "none",
+                      bottom: "0",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "2vw",
+                        fontWeight: "bold",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      Proceed to Payment
+                    </span>
+                    <PriceText style={{ fontSize: "2.5vw" }}>
+                      €{total.toFixed(2)}
+                    </PriceText>
+                  </GradiantButton>
+                </PaymentWrapper>
+              </div>
+            </MyOrderCheckWrapper>
+          </MyOrderWrapper>
+        </PageWrapper>
+      </MenuContext.Provider>
     </>
   );
 };
@@ -279,6 +352,7 @@ const SuggetionDrinkItem = styled.div`
   border-radius: 15px;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;
 
 const PaymentWrapper = styled.div`

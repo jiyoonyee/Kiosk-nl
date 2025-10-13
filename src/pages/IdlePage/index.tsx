@@ -5,12 +5,11 @@ import CharLogoImg from "@/assets/images/CharLogo.png";
 import eatinImg from "@/assets/images/eatin.png";
 import takeoutImg from "@/assets/images/takeout.png";
 // import required modules
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 
-// import { Navigation, Pagination, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
+import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -32,7 +31,7 @@ const IdlePage = () => {
     el: ".swiper-pagination",
     clickable: true,
     renderBullet: function (_index: number, className: string) {
-      return '<span class="' + className + '"></span>';
+      return '<span class="' + className + ' ideleSwiper"></span>';
     },
   };
 
@@ -71,10 +70,10 @@ const IdlePage = () => {
               }}
               pagination={pagination}
               modules={[EffectCoverflow, Pagination, Autoplay]}
-              className="mySwiper"
+              className="mySwiper ideleSwiper"
             >
               {idleData.map((item, i) => (
-                <SwiperSlide>
+                <SwiperSlide className="ideleSwiper">
                   <IdleMenuItem
                     key={i}
                     filename={item.filename}
@@ -86,7 +85,7 @@ const IdlePage = () => {
             </Swiper>
           )}
 
-          <div className="swiper-pagination"></div>
+          <div className="swiper-pagination ideleSwiper"></div>
         </IdleBackgroundContainer>
         <OrderWrapper>
           <span>Order Here</span>

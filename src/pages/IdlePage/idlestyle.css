@@ -1,9 +1,9 @@
-.swiper {
+.swiper.ideleSwiper {
   width: 100%;
   /* height: 100%; */
 }
 
-.swiper-slide {
+.swiper-slide.ideleSwiper {
   background-color: white;
   width: 70%;
   /* height: 90%; */
@@ -13,26 +13,26 @@
   padding: 30px;
 }
 
-.swiper-slide img {
+.swiper-slide.ideleSwiper img {
   display: block;
   width: 100%;
 }
 
-.swiper-slide-prev {
+.swiper-slide-prev.ideleSwiper {
   border-right: 10px;
 }
 
-.swiper-slide-next {
+.swiper-slide-next.ideleSwiper {
   border-right: 10px;
 }
 
-.swiper-pagination {
+.swiper-pagination.ideleSwiper {
   position: absolute;
   bottom: 0px !important;
   transform: translateY(150%);
 }
 
-.swiper-pagination-bullet {
+.swiper-pagination-bullet.ideleSwiper {
   width: 25px;
   height: 25px;
   background: #abd0b9;
@@ -43,12 +43,12 @@
   margin: 0 6px !important;
 }
 
-.swiper-pagination-bullet.swiper-pagination-bullet-active {
+.swiper-pagination-bullet.swiper-pagination-bullet-active.ideleSwiper {
   background: #004f1b;
 }
 
 @media (max-height: 1000px) {
-  .swiper-slide {
+  .swiper-slide.ideleSwiper {
     /* background-color: #949694; */
     padding: 10px;
     width: 60%;
@@ -57,7 +57,7 @@
 }
 
 @media (max-height: 1500px) {
-  .swiper-slide {
+  .swiper-slide.ideleSwiper {
     /* background-color: #949694; */
     padding: 10px;
     width: 50%;
@@ -66,10 +66,10 @@
 }
 
 @media (min-height: 2000px) {
-  .swiper {
+  .swiper.ideleSwiper {
     height: auto;
   }
-  .swiper-slide {
+  .swiper-slide.ideleSwiper {
     padding: 60px;
     width: 75%;
   }

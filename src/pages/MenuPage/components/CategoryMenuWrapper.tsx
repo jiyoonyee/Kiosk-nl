@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import CategoryMenuItem from "./CategoryMenuItem";
 import { type MenuItemInterface } from "../index";
-import MenuContext from "@/contexts/MenuContext";
+// import MenuContext from "@/contexts/MenuDetailContext";
 
 interface CategroyWrapProps {
   name: string;
   data: MenuItemInterface[];
-  $onChange: React.Dispatch<React.SetStateAction<number>>;
   updatePopupState: (modalName: string | null) => void;
 }
 
@@ -14,9 +13,7 @@ const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
   name,
   data,
   updatePopupState,
-  ...rest
 }) => {
-  // console.log(rest);
   return (
     <>
       <Wrap id={name}>
@@ -26,20 +23,18 @@ const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
           <div>{name}</div>
         </AllCategoryLine>
         <MenuItemWrap>
-          <MenuContext.Provider value={rest}>
-            {data.map((item, i) => (
-              <CategoryMenuItem
-                updatePopupState={updatePopupState}
-                available={item.available}
-                filename={item.filename}
-                name={item.name}
-                kcal={item.kcal}
-                price={item.price}
-                product_id={item.product_id}
-                key={i}
-              />
-            ))}
-          </MenuContext.Provider>
+          {data.map((item, i) => (
+            <CategoryMenuItem
+              updatePopupState={updatePopupState}
+              available={item.available}
+              filename={item.filename}
+              name={item.name}
+              kcal={item.kcal}
+              price={item.price}
+              product_id={item.product_id}
+              key={i}
+            />
+          ))}
         </MenuItemWrap>
       </Wrap>
     </>

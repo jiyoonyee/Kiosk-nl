@@ -4,7 +4,7 @@ import { KcalText, PriceText } from "@/components/ui/Ui";
 import { type MenuItemInterface } from "../index";
 import { useContext } from "react";
 
-import MenuContext from "@/contexts/MenuContext";
+import MenuContext from "@/contexts/MenuDetailContext";
 
 interface CategoryMenuItemProps extends MenuItemInterface {
   updatePopupState: (modalName: string | null) => void;
@@ -21,7 +21,7 @@ const CategoryMenuItem: React.FC<CategoryMenuItemProps> = ({
   const selecter = useContext(MenuContext);
 
   const ItemClickEvent = () => {
-    if (product_id) selecter?.$onChange?.(product_id);
+    if (product_id) selecter.$onChange?.(product_id);
     updatePopupState("detailModal");
   };
 

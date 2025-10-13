@@ -7,7 +7,7 @@ import { GradiantButton } from "@/components/ui/Ui";
 import QuantityButton from "@/components/ui/QuantityButton";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import MenuContext from "@/contexts/MenuContext";
+import MenuContext from "@/contexts/MenuDetailContext";
 import axios from "axios";
 
 import type { MenuItemInterface } from "../index";
@@ -68,6 +68,7 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
   };
 
   useEffect(() => {
+    console.log("MenuId", selecter.MenuId);
     const getMenuDetail = (menuId: number | undefined) => {
       if (!menuId) return;
 
