@@ -68,7 +68,6 @@ const MenuDetailModal: React.FC<detailProps> = ({ updatePopupState }) => {
   };
 
   useEffect(() => {
-    console.log("MenuId", selecter.MenuId);
     const getMenuDetail = (menuId: number | undefined) => {
       if (!menuId) return;
 

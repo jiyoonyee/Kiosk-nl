@@ -73,12 +73,12 @@ const MenuPage = () => {
         // console.log(res.data);
         setDrinkData(res.data);
       });
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
-      .then((res) => {
-        // console.log(res);
-        setMenuData(res.data);
-      });
+    // axios
+    //   .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setMenuData(res.data);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -86,6 +86,25 @@ const MenuPage = () => {
       orderListRef.current.scrollTop = orderListRef.current.scrollHeight;
     }
   }, [orders]);
+
+  useEffect(() => {
+    if (selected === "ALL") {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
+        .then((res) => {
+          console.log(res.data);
+          setMenuData(res.data);
+        });
+    } else {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/api/products-category`, {
+          params: { category: selected },
+        })
+        .then((res) => {
+          setMenuData([{ name: selected, data: res.data }]);
+        });
+    }
+  }, [selected]);
 
   const openPayment = () => {
     if (total === 0) {

@@ -6,6 +6,7 @@ interface CategoryProps {
   CategoryName: string;
   ImagePath: string;
   Selected: string;
+  MenuValue: string;
 }
 
 interface SelectProps {
@@ -16,14 +17,14 @@ const AsideItem: React.FC<CategoryProps> = ({
   CategoryName,
   ImagePath,
   Selected,
+  MenuValue,
 }) => {
   const group = useContext(AsideContext);
-  // console.log(Selected);
   const [selectState, setSelectState] = useState(false);
 
   // props값 받을때마다 랜더링해서 코드 실행
   useEffect(() => {
-    if (CategoryName === Selected) {
+    if (MenuValue === Selected) {
       setSelectState(true);
     } else {
       setSelectState(false);
@@ -36,7 +37,7 @@ const AsideItem: React.FC<CategoryProps> = ({
         style={{ display: "none" }}
         type="radio"
         name="Category"
-        value={CategoryName}
+        value={MenuValue}
         id={CategoryName}
         onChange={(e) => group.$onChange && group.$onChange(e.target.value)}
       />

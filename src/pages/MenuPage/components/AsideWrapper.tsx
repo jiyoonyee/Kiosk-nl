@@ -20,13 +20,13 @@ interface CategoryProps {
 
 const AsideWrapper: React.FC<CategoryProps> = ({ value, ...rest }) => {
   const Categorys = [
-    { name: "ALL", path: All_img },
-    { name: "BreakFast", path: Breakfast_Img },
-    { name: "Lunch & Dinner", path: Lunch_Img },
-    { name: "Sides", path: Sides_Img },
-    { name: "Snacks", path: Snacks_Img },
-    { name: "Dips", path: Dips_Img },
-    { name: "Drinks", path: Drinks_Img },
+    { name: "ALL", path: All_img, MenuValue: "ALL" },
+    { name: "BreakFast", path: Breakfast_Img, MenuValue: "Breakfast" },
+    { name: "Lunch & Dinner", path: Lunch_Img, MenuValue: "Lunch&Dinner" },
+    { name: "Sides", path: Sides_Img, MenuValue: "Sides" },
+    { name: "Snacks", path: Snacks_Img, MenuValue: "Snacks" },
+    { name: "Dips", path: Dips_Img, MenuValue: "Dips" },
+    { name: "Drinks", path: Drinks_Img, MenuValue: "Drinks" },
   ];
   return (
     <>
@@ -38,6 +38,7 @@ const AsideWrapper: React.FC<CategoryProps> = ({ value, ...rest }) => {
               CategoryName={c.name}
               ImagePath={c.path}
               Selected={value}
+              MenuValue={c.MenuValue}
             />
           ))}
         </AsideContext.Provider>

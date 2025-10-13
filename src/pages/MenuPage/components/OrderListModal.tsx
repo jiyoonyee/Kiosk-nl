@@ -45,7 +45,6 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
         items: newItem,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           setSendState((prev) => !prev);
           updateOrderNumber(res.data.pickup_number);
