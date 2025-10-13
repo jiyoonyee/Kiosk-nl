@@ -70,7 +70,7 @@ const MenuPage = () => {
         params: { category: "Drinks" },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDrinkData(res.data);
       });
     axios
@@ -97,13 +97,13 @@ const MenuPage = () => {
 
   return (
     <>
-      <MenuContext.Provider
-        value={{
-          $onChange: setSelectedMenuId,
-          MenuId: selectedMenuId,
-        }}
-      >
-        <PageWrapper style={{ paddingTop: "10vh" }}>
+      <PageWrapper style={{ paddingTop: "10vh" }}>
+        <MenuContext.Provider
+          value={{
+            $onChange: setSelectedMenuId,
+            MenuId: selectedMenuId,
+          }}
+        >
           {popupState.state && (
             <Popup
               modalName={popupState.modalState}
@@ -196,7 +196,6 @@ const MenuPage = () => {
                             key={i}
                             className="drinkSwiper"
                             onClick={() => {
-                              console.log(item.product_id);
                               if (item.product_id) {
                                 setSelectedMenuId(item.product_id);
                                 updatePopupState("detailModal");
@@ -253,8 +252,8 @@ const MenuPage = () => {
               </div>
             </MyOrderCheckWrapper>
           </MyOrderWrapper>
-        </PageWrapper>
-      </MenuContext.Provider>
+        </MenuContext.Provider>
+      </PageWrapper>
     </>
   );
 };
