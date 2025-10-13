@@ -32,14 +32,13 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
 
     let second: number = 0;
     const loadingTextTimer = setInterval(() => {
+      second++;
       setLoadingText((prev) => prev + ".");
-      if (second === 3) {
+      if (second === 4) {
         second = 0;
         setLoadingText("Sending Processing your order");
       }
-
-      second++;
-    }, 1000);
+    }, 500);
 
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/orders/`, {
@@ -48,12 +47,10 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
       .then((res) => {
         console.log(res);
         if (res.status === 201) {
-          setTimeout(() => {
-            setSendState((prev) => !prev);
-            updateOrderNumber(res.data.order_id);
-            navigate("/order_number");
-            clearInterval(loadingTextTimer);
-          }, 5000);
+          setSendState((prev) => !prev);
+          updateOrderNumber(res.data.pickup_number);
+          navigate("/order_number");
+          clearInterval(loadingTextTimer);
         }
       })
       .catch((err) => {
