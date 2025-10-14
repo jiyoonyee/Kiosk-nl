@@ -319,7 +319,7 @@ const MyOrderCheckWrapper = styled.div`
 
 const MyOrderMenuList = styled.div`
   width: 70%;
-  max-height: 100%;
+  height: 100%;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   border: 2px solid black;

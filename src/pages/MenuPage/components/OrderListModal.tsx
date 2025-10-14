@@ -22,7 +22,9 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
   );
 
   const sendOrderData = () => {
-    if (sendState) return;
+    // 중복 입력 방지
+    if (sendState || total === 0) return;
+
     const newItem = orders.map((el) => ({
       product_id: el.product_id,
       quantity: el.quantity,
@@ -88,23 +90,38 @@ const OrderListModal: React.FC<OrderListProps> = ({ updatePopupState }) => {
           </div>
         </PopupHeader>
         <ItemListWrap>
-          {orders.map((item, i) => (
-            <CheckOrderItem
-              menuName={item.menuName}
-              description={item.description}
-              filePath={item.filePath}
-              kcal={item.kcal}
-              price={item.price}
-              product_id={item.product_id}
-              quantity={item.quantity}
-              key={i}
-            />
-          ))}
+          {orders.length !== 0 ? (
+            orders.map((item, i) => (
+              <CheckOrderItem
+                menuName={item.menuName}
+                description={item.description}
+                filePath={item.filePath}
+                kcal={item.kcal}
+                price={item.price}
+                product_id={item.product_id}
+                quantity={item.quantity}
+                key={i}
+              />
+            ))
+          ) : (
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "5vw",
+                fontWeight: "bold",
+              }}
+            >
+              No items in your order
+            </div>
+          )}
         </ItemListWrap>
         <GradiantButton
           onClick={sendOrderData}
           $bottomMargin="-30%"
           $sideWidth={2}
+          style={{
+            filter: total === 0 ? "grayscale(50%)" : "none",
+          }}
         >
           <div>Checkout</div>
           <div style={{ textAlign: "center" }}>

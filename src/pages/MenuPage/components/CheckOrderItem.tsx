@@ -122,6 +122,9 @@ const MenuDetailWrapper = styled.div`
 const DeleteContainer = styled.div`
   position: absolute;
   display: inline;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
   left: 0;
   width: 15%;

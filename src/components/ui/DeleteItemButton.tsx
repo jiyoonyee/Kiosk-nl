@@ -23,7 +23,7 @@ const DeleteItemButton: React.FC<DeleteItemButtonProps> = ({ itemId }) => {
 };
 
 const ButtonWrap = styled.div`
-  height: 80%;
+  width: 10vw;
   aspect-ratio: 1 / 1;
   border: 2px solid black;
   border-radius: 10px;
@@ -32,6 +32,7 @@ const ButtonWrap = styled.div`
   align-items: center;
   background-color: #f84f52;
   & > img {
+    /* position: absolute; */
     width: 60%;
   }
 `;
