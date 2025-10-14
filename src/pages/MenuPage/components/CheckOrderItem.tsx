@@ -1,3 +1,4 @@
+import DeleteItemButton from "@/components/ui/DeleteItemButton";
 import QuantityButton from "@/components/ui/QuantityButton";
 import { KcalText, PriceText } from "@/components/ui/Ui";
 import { useOrder } from "@/hooks/useOrder";
@@ -43,6 +44,7 @@ const CheckOrderItem: React.FC<ItemProps> = ({
           <div style={{ fontSize: "4vw", fontWeight: "bold" }}>{menuName}</div>
           <MenuDetailWrapper>
             <div>{description}</div>
+
             <div>
               <KcalText style={{ fontSize: "2.5vw" }}>
                 {kcal * itmeQuantity}kcal
@@ -56,6 +58,9 @@ const CheckOrderItem: React.FC<ItemProps> = ({
                 ItemQuantity={itmeQuantity}
               />
             </div>
+            <DeleteContainer>
+              <DeleteItemButton itemId={product_id} />
+            </DeleteContainer>
           </MenuDetailWrapper>
         </MenuInforWrapper>
       </Wrap>
@@ -95,14 +100,13 @@ const MenuDetailWrapper = styled.div`
   align-items: start;
   flex-direction: column;
   height: 100%;
-  & > div {
-    height: 100%;
-  }
+  position: relative;
 
   & > div:nth-child(1) {
     font-size: 2vw;
     line-height: 2.1vw;
     font-weight: 500;
+    height: 100%;
   }
   & > div:nth-child(2) {
     width: 100%;
@@ -111,6 +115,15 @@ const MenuDetailWrapper = styled.div`
     align-items: end;
     flex-direction: column;
     gap: 5px;
+    height: 100%;
   }
+`;
+
+const DeleteContainer = styled.div`
+  position: absolute;
+  display: inline;
+  bottom: 0;
+  left: 0;
+  width: 15%;
 `;
 export default CheckOrderItem;

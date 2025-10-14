@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import HeaderImage from "@/assets/images/Logo.png";
 import { useNavigate } from "react-router-dom";
+import { useOrder } from "@/hooks/useOrder";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { ResetOrder } = useOrder();
 
   return (
     <>
@@ -11,6 +13,7 @@ const Header = () => {
         <LogoWrap
           onClick={() => {
             navigate("/");
+            ResetOrder();
           }}
         >
           <img src={HeaderImage} alt="headerlogo" />

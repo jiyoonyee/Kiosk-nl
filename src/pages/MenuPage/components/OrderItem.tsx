@@ -1,7 +1,7 @@
+import DeleteItemButton from "@/components/ui/DeleteItemButton";
 import QuantityButton from "@/components/ui/QuantityButton";
 import { PriceText } from "@/components/ui/Ui";
 import { useOrder } from "@/hooks/useOrder";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface OrderItemProps {
@@ -18,30 +18,25 @@ const OrderItem: React.FC<OrderItemProps> = ({
   quantity,
 }) => {
   const { updateOrder } = useOrder();
-  const [itemQuantity, setItemQuantity] = useState(quantity);
 
-  useEffect(() => {
-    setItemQuantity(quantity);
-  }, [quantity]);
-
-  const UpdataQuantity = (quan: number) => {
+  const UpdateQuantity = (quan: number) => {
     if (quan > 0 && quan < 100) {
-      setItemQuantity(quan);
       updateOrder(product_id, quan);
     }
   };
   return (
     <>
       <Wrap>
+        <DeleteItemButton itemId={product_id} />
         <MenuNameContainer>{menuName}</MenuNameContainer>
         <QuantityWrap>
           <PriceText style={{ fontSize: "2.2vw" }}>
-            €{(price * itemQuantity).toFixed(2)}
+            €{(price * quantity).toFixed(2)}
           </PriceText>
           <QuantityButton
             boxSize={4}
-            ItemQuantity={itemQuantity}
-            updateQuantity={UpdataQuantity}
+            ItemQuantity={quantity}
+            updateQuantity={UpdateQuantity}
           />
         </QuantityWrap>
       </Wrap>
@@ -57,6 +52,7 @@ const Wrap = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
+  gap: 10px;
 `;
 
 const MenuNameContainer = styled.div`
@@ -65,6 +61,7 @@ const MenuNameContainer = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const QuantityWrap = styled.div`

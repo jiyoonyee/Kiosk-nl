@@ -21,6 +21,7 @@ type OrderContextType = {
   updateOrder: (id: number, quan: number) => void;
   ResetOrder: () => void;
   updateOrderNumber: (n: number) => void;
+  DeleteOrderItem: (id: number) => void;
 };
 
 // 기본값 (초기화)
@@ -32,4 +33,5 @@ export const OrderContext = createContext<OrderContextType>({
   updateOrder: () => {},
   ResetOrder: () => {},
   updateOrderNumber: () => {},
+  DeleteOrderItem: () => {},
 });

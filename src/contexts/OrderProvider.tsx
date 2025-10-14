@@ -2,16 +2,6 @@ import { useState, type ReactNode } from "react";
 import { OrderContext } from "./OrderContext";
 import type { ItemProps } from "@/pages/MenuPage/components/CheckOrderItem";
 
-// type orderInfo = {
-//   menuName: string;
-//   price: number;
-//   product_id: number;
-//   quantity: number;
-//   kcal: number;
-//   description: string;
-//   filePath: string;
-// };
-
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<ItemProps[]>([]);
   const [total, setTotal] = useState(0);
@@ -67,6 +57,15 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     setOrderNumber(n);
   };
 
+  const DeleteOrderItem = (id: number) => {
+    const targetOrder = orders.find((order) => order.product_id === id);
+    if (!targetOrder) return;
+
+    // 2️⃣ 기존 총합에서 이 아이템의 총액 빼기
+    setTotal((prev) => prev - targetOrder.quantity * targetOrder.price);
+    setOrders(orders.filter((el) => el.product_id !== id));
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -77,6 +76,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         updateOrder,
         ResetOrder,
         updateOrderNumber,
+        DeleteOrderItem,
       }}
     >
       {children}
