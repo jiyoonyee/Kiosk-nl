@@ -66,19 +66,18 @@ const MenuPage = () => {
 
   useEffect(() => {
     axios
+      .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
+      .then((res) => {
+        console.log(res.data);
+        setMenuData(res.data);
+      });
+    axios
       .get(`${import.meta.env.VITE_API_URL}/api/products-category`, {
         params: { category: "Drinks" },
       })
       .then((res) => {
-        // console.log(res.data);
         setDrinkData(res.data);
       });
-    // axios
-    //   .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setMenuData(res.data);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -86,25 +85,6 @@ const MenuPage = () => {
       orderListRef.current.scrollTop = orderListRef.current.scrollHeight;
     }
   }, [orders]);
-
-  useEffect(() => {
-    if (selected === "ALL") {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
-        .then((res) => {
-          console.log(res.data);
-          setMenuData(res.data);
-        });
-    } else {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/api/products-category`, {
-          params: { category: selected },
-        })
-        .then((res) => {
-          setMenuData([{ name: selected, data: res.data }]);
-        });
-    }
-  }, [selected]);
 
   const openPayment = () => {
     if (total === 0) {
@@ -137,6 +117,7 @@ const MenuPage = () => {
               {menuData &&
                 menuData.map((item, i) => (
                   <CategoryMenuWrapper
+                    selected={selected}
                     updatePopupState={updatePopupState}
                     name={item.name}
                     data={item.data}

@@ -7,36 +7,40 @@ interface CategroyWrapProps {
   name: string;
   data: MenuItemInterface[];
   updatePopupState: (modalName: string | null) => void;
+  selected: string;
 }
 
 const CategoryMenuWrapper: React.FC<CategroyWrapProps> = ({
   name,
   data,
   updatePopupState,
+  selected,
 }) => {
   return (
     <>
-      <Wrap id={name}>
-        <AllCategoryLine>
-          <div></div>
-          <div></div>
-          <div>{name}</div>
-        </AllCategoryLine>
-        <MenuItemWrap>
-          {data.map((item, i) => (
-            <CategoryMenuItem
-              updatePopupState={updatePopupState}
-              available={item.available}
-              filename={item.filename}
-              name={item.name}
-              kcal={item.kcal}
-              price={item.price}
-              product_id={item.product_id}
-              key={i}
-            />
-          ))}
-        </MenuItemWrap>
-      </Wrap>
+      {(selected === name || selected === "ALL") && (
+        <Wrap id={name}>
+          <AllCategoryLine>
+            <div></div>
+            <div></div>
+            <div>{name}</div>
+          </AllCategoryLine>
+          <MenuItemWrap>
+            {data.map((item, i) => (
+              <CategoryMenuItem
+                updatePopupState={updatePopupState}
+                available={item.available}
+                filename={item.filename}
+                name={item.name}
+                kcal={item.kcal}
+                price={item.price}
+                product_id={item.product_id}
+                key={i}
+              />
+            ))}
+          </MenuItemWrap>
+        </Wrap>
+      )}
     </>
   );
 };
@@ -56,7 +60,9 @@ const AllCategoryLine = styled.div`
   margin-bottom: 20px;
   gap: 20px;
   & > div:nth-child(1) {
-    width: 4vw;
+    height: 100%;
+    padding: 1.5vw;
+    /* height: 50px; */
     aspect-ratio: 1 /1;
     border: 2px solid black;
     border-radius: 10000px;
