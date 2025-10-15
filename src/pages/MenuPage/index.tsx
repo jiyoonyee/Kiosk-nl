@@ -151,7 +151,7 @@ const MenuPage = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    please select menu
+                    No items in your order
                   </div>
                 ) : (
                   orders.map((data, i) => (

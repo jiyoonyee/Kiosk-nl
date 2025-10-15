@@ -152,6 +152,9 @@ const ItemListWrap = styled.div`
   margin-bottom: 50px;
   overflow-y: scroll;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const LoadingLayout = styled.div`

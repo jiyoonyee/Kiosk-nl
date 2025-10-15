@@ -59,7 +59,7 @@ const CheckOrderItem: React.FC<ItemProps> = ({
               />
             </div>
             <DeleteContainer>
-              <DeleteItemButton itemId={product_id} />
+              <DeleteItemButton boxSize="100%" itemId={product_id} />
             </DeleteContainer>
           </MenuDetailWrapper>
         </MenuInforWrapper>
@@ -90,6 +90,7 @@ const MenuInforWrapper = styled.div`
   justify-content: start;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   padding: 10px;
   gap: 10px;
 `;

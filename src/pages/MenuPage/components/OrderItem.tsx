@@ -27,7 +27,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   return (
     <>
       <Wrap>
-        <DeleteItemButton itemId={product_id} />
+        <DeleteItemButton boxSize="5vh" itemId={product_id} />
         <MenuNameContainer>{menuName}</MenuNameContainer>
         <QuantityWrap>
           <PriceText style={{ fontSize: "2.2vw" }}>

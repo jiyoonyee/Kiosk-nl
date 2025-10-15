@@ -4,9 +4,13 @@ import { useOrder } from "@/hooks/useOrder";
 
 interface DeleteItemButtonProps {
   itemId: number;
+  boxSize: string;
 }
 
-const DeleteItemButton: React.FC<DeleteItemButtonProps> = ({ itemId }) => {
+const DeleteItemButton: React.FC<DeleteItemButtonProps> = ({
+  itemId,
+  boxSize,
+}) => {
   const { DeleteOrderItem } = useOrder();
 
   const DeleteEvent = () => {
@@ -15,7 +19,7 @@ const DeleteItemButton: React.FC<DeleteItemButtonProps> = ({ itemId }) => {
 
   return (
     <>
-      <ButtonWrap onClick={DeleteEvent}>
+      <ButtonWrap onClick={DeleteEvent} style={{ width: boxSize ?? "40px" }}>
         <img src={DeleteImage} alt="삭제" />
       </ButtonWrap>
     </>
@@ -23,7 +27,6 @@ const DeleteItemButton: React.FC<DeleteItemButtonProps> = ({ itemId }) => {
 };
 
 const ButtonWrap = styled.div`
-  width: 10vw;
   aspect-ratio: 1 / 1;
   border: 2px solid black;
   border-radius: 10px;
