@@ -74,7 +74,6 @@ const Wrap = styled.label`
   @media (min-width: 1100px) {
     & > span {
       font-size: 1.9vw;
-      color: green;
     }
   }
 `;

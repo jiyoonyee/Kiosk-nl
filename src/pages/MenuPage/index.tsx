@@ -68,7 +68,6 @@ const MenuPage = () => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/api/products-all/`)
       .then((res) => {
-        console.log(res.data);
         setMenuData(res.data);
       });
     axios
